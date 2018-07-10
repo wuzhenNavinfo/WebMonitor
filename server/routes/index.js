@@ -1,6 +1,7 @@
 import reqInterface from './reqInterface';
 import user from './user'
 import error from './error'
+import staticView from './staticView'
 
 /**
  * 顶层路由控制器
@@ -29,6 +30,11 @@ const routerDispatcher = function (app) {
      * 和错误信息有关的路由
      */
     app.use('/webMonitor/error', error);
+
+    /**
+     * 用于接口统计的路由
+     */
+    app.use('/webMonitor/statis', staticView);
 };
 
 export default routerDispatcher;
