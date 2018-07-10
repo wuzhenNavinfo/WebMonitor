@@ -3,9 +3,9 @@
  */
 import mysql from 'mysql'
 import async from 'async'
-var logger = require('../log4js').logger;
+var logger = require('../../log4js').logger;
 
-import config from '../config/config'
+import config from '../../config/config'
 
 
 var pool = mysql.createPool({
@@ -87,9 +87,40 @@ var execSelect = function (sql, param, callback) {
     });
 };
 
+/**
+ * 使用promise的方式查询sql
+ * @param sql
+ * @param param
+ * @param callback
+ * @return {Promise}
+ */
+var execPromiseSelect = function (sql, param = null) {
+  return new Promise((resolved, reject) => {
+    pool.getConnection(function (err, connection) {
+      if (err) {
+          logger.error('获取数据库连接失败：', err);
+          return reject(err);
+      }
+      connection.query(sql, param, function (error, results, fields) {
+        connection.release();
+        if (error) {
+        	logger.error("sql:", sql);
+	        logger.error("param:", param);
+            logger.error('执行sql失败:', error);
+            return reject(error);
+        } else {
+	        logger.info('执行sql成功，结果：', results);
+            return resolved(results)
+        }
+      });
+    });
+  });
+};
+
 let dbHelper = {
     execTrans: execTrans,
-    execSelect: execSelect
+    execSelect: execSelect,
+    execPromiseSelect: execPromiseSelect
 }
 
 export default dbHelper;

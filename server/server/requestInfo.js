@@ -1,4 +1,4 @@
-import dbHelper from '../dbHelper/DBConnection'
+import dbHelper from './dbHelper/DBConnection'
 
 /**
  * 接口请求信息控制类

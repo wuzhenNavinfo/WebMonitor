@@ -1,4 +1,4 @@
-import dbHelper from '../dbHelper/DBConnection'
+import dbHelper from './dbHelper/DBConnection'
 
 /**
  * 用户记录user的类
