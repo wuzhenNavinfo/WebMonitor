@@ -1,5 +1,10 @@
 <template>
-    <div></div>
+    <div>
+        <div class="nodata" v-show="noData">
+            <h3>{{noDataTitle}}</h3>
+            <span>无数据</span>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -7,7 +12,10 @@ import echarts from 'echarts'
 let chartObj,vueObj = {};
 export default {
     data() {
-        return {}
+        return {
+            noData: false,
+            noDataTitle: ''
+        }
     },
     props: [],
     mounted: function () {
@@ -47,31 +55,38 @@ function initContent(content){
  * 初始化表格配置
  */
 function initChart(option){
-    var extendOption = {
-        title: {
-            text: '' || option.title,
-            x: 'center',
-            textStyle: {
-                color: '#fff',
-                fontWeight: 'normal',
-                fontSize: 16
-            }
-        },
-        tooltip: {},
-        xAxis: {
+    if(option.data.length>0){
+        vueObj[option.ref].noData = false;
+        var extendOption = {
+            title: {
+                text: '' || option.title,
+                x: 'center',
+                textStyle: {
+                    color: '#fff',
+                    fontWeight: 'normal',
+                    fontSize: 16
+                }
+            },
+            tooltip: {},
+            xAxis: {
+                show: false
+            },
+        yAxis: {
             show: false
         },
-    yAxis: {
-        show: false
-    },
-    series: [{
-        name: '作业员在线统计',
-        type: 'pie',
-        data: option.data || [] 
-    }]};
+        series: [{
+            name: '作业员在线统计',
+            type: 'pie',
+            data: option.data || [] 
+        }]};
 
-    chartObj = echarts.init(document.getElementById(vueObj[option.ref].$el.id), 'dark');
-    chartObj.setOption(extendOption);
+        chartObj = echarts.init(document.getElementById(vueObj[option.ref].$el.id), 'dark');
+        chartObj.setOption(extendOption);
+    }else{
+        vueObj[option.ref].noData = true;
+        vueObj[option.ref].noDataTitle = option.title;
+    }
+    
 }
 
 /**

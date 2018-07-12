@@ -82,23 +82,23 @@ function initMap(option){
            markPoint : {
                 symbol:'emptyCircle',
                 symbolSize : function (v){
-                    return v+10
+                    return v + 15
                 },
                 effect : {
                     show: false,
                     shadowBlur : 0
                 },
-                itemStyle:{
-                    normal:{
-                        label:{show:true}
+                itemStyle: {
+                    normal: {
+                        // borderColor: '#0f0',
+                        // borderWidth: 1,
+                        label: {
+                            show: true,
+                            // color: '#000'
+                        }
                     }
                 },
-                data : [
-                    // {name:'上海',value:95,coord:[121.4648,31.2891]},
-                    // {name:'东莞',value:90,coord:[113.8953,22.901]},
-                    // {name:'东营',value:80,coord:[118.7073,37.5513]},
-                    // {name:'中山',value:70,coord:[113.4229,22.478]}
-                ]
+                data : []
             }
 		},            
 	]

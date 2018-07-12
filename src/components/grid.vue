@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-table :data="tableData" style="width: 100%">
+        <el-table :data="tableData" style="width: 100%" @row-click="onRowClick">
             <!-- <el-table-column v-for="col in cols" :prop="col.prop" :label="col.label">
             </el-table-column> -->
             <el-table-column prop="date" label="日期">
@@ -10,7 +10,7 @@
             <el-table-column prop="address" label="地址">
             </el-table-column>
         </el-table>
-        <el-pagination :page-size="20" :pager-count="11" layout="prev, pager, next" :total="1000">
+        <el-pagination :page-size="pageSize" :current-page="pageNo" layout="prev, pager, next" :total="tableData.length" @current-change="changePage" v-show="tableData.length>0">
         </el-pagination>
     </div>
 </template>
@@ -33,8 +33,9 @@ export default {
                 label: '地址',
                 prop: 'address'
             }],
-            noData: '无数据',
-            tableData:[]
+            pageNo: 1,
+            pageSize: 20,
+            tableData: []
         }
     },
     props: [],
@@ -42,13 +43,10 @@ export default {
         vueObj[this.$options._parentVnode.data.ref] = this;
     },
     methods: {
-        init:init
+        initContent: initContent,
+        onRowClick: function(){},
+        changePage: function(){}
     }
-}
-
-function init(param){
-    initContent(param.content);
-    initGrid();
 }
 
 /**
@@ -60,14 +58,12 @@ function initContent(content){
 
     var style = {
         height: content.height || '300px',
-        width: content.width || '300px'
+        width: content.width || '100%'
     }
     for(var o in style){
         vueObj[content.ref].$el.style[o] = style[o];
     }
-}
-
-function initGrid(option){
+    document.getElementById(vueObj[content.ref].$el.id).getElementsByClassName('el-table__body')[0].style.maxHeight = (content.height - 70) +'px'
 }
 
 /**

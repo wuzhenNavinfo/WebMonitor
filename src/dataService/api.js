@@ -28,18 +28,18 @@ var getReq = function (url, param) {
 };
 
 //地图作业员分布
-export const mapShow = param => { return postReq('/webMonitor/statis/view/mapShow', param)};
+export const mapShow = param => { return getReq('/webMonitor/statis/view/mapShow', param)};
 //在线、离线用户数
-export const userOnline = param => { return postReq('/webMonitor/statis/view/userOnline', param)};
+export const userOnline = param => { return getReq('/webMonitor/statis/view/userOnline', param)};
 //页面接口返回时间
-export const interfaceTime = param => { return postReq('/webMonitor/statis/view/interfaceTime', param)};
+export const interfaceTime = param => { return getReq('/webMonitor/statis/view/interfaceTime', param)};
 //省份平均页面渲染时间
-export const loadPageTime = param => { return postReq('/webMonitor/statis/view/loadPageTime', param)};
+export const loadPageTime = param => { return getReq('/webMonitor/statis/view/loadPageTime', param)};
 //浏览器使用占比
-export const browser = param => { return postReq('/webMonitor/statis/view/browser', param)};
+export const browser = param => { return getReq('/webMonitor/statis/view/browser', param)};
 //十个省份接口错误
-export const interfaceError = param => { return postReq('/webMonitor/statis/view/interfaceError', param)};
+export const interfaceError = param => { return getReq('/webMonitor/statis/view/interfaceError', param)};
 //首页列表
-export const staticList = param => { return postReq('/webMonitor/statis/view/staticList', param)};
+export const staticList = param => { return getReq('/webMonitor/statis/view/staticList', param)};
 //详细列表
 export const detailList = param => { return getReq('/webMonitor/statis/view/detailList', param)};

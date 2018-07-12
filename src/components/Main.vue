@@ -78,11 +78,10 @@
           ref: 'userOnline'
         },
         option: {
-          title: '用户在线、离线数统计'
+          title: '用户在线、离线数统计',
+          data: res.data
         }
       });
-      
-      self.$refs.userOnline.setData(res.data);
     })
   }
 
@@ -147,11 +146,10 @@
           ref: 'browser'
         },
         option: {
-          title: 'Chrome各版本使用占比'
+          title: 'Chrome各版本使用占比',
+          data: res.data
         }
       });
-      
-      self.$refs.browser.setData(res.data);
     })
   }
 
@@ -238,7 +236,7 @@
       .arrange-v{
         margin: 15px auto;
         padding-top: 10px;
-        box-shadow: 0px 0px 4px #21f98b;
+        box-shadow: 0px 0px 4px #009683;
       }
       ul {
         list-style: none;
@@ -249,7 +247,7 @@
           font-size: 13px;
           line-height: 23px;
           .resultSpan{
-            color: #2aea78;
+            color: #55decd;
             margin-left: 5px;
             font-size: 15px; 
           }

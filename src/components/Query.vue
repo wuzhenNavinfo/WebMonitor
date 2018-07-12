@@ -3,7 +3,7 @@
     <div class="container">
       <div class="queryArea">
         <span>用户ID：<input type="input" placeholder="请输入ID" v-model="userid" style="height: 20px;"/></span>
-        <span>类型：<select v-model="type"><option value="0">异常</option><option value="1">请求</option></select></span>
+        <span>类型：<select v-model="type"><option value="1">异常</option><option value="2">请求</option></select></span>
         <span>搜索时间：开始&nbsp;&nbsp; <input type="datetime-local" v-model="startTime"/>&nbsp;&nbsp;~ 结束&nbsp;&nbsp;<input type="datetime-local" v-model="endTime"/></span>
         <span class="queryButton" v-on:click="query">查询</span>
       </div>
@@ -36,13 +36,13 @@
   import { detailList } from '../dataService/api';
   import { appUtil } from '../config';
   import { Utils } from '../common/js/utils.js';
-  var self;
+  var self, currentPage = 1;
   export default {
     name: 'Query',
     data () {
       return {
         userid:'',
-        type: 0,
+        type: 1,
         startTime: initDate(86400000),
         endTime: initDate(),
         CPUUse: '无数据',
@@ -53,6 +53,7 @@
     },
     mounted:function(){
       self = this;
+      initGrid();
     },
     components: {
       grid
@@ -62,6 +63,24 @@
     }
   }
 
+
+  function initGrid(){
+    self.$refs.Grid.tableData = [];
+
+    self.$refs.Grid.onRowClick = function(p1,p2,p3){
+      console.log(11);
+    }
+
+    self.$refs.Grid.changePage = function(pageNo){
+      currentPage = pageNo;
+      query(pageNo);
+    }
+    self.$refs.Grid.initContent({
+      id: 'detailTable',
+      ref: 'Grid',
+      height: document.getElementsByClassName('tableSpan')[0].offsetHeight
+    });
+  }
 
   /**
    * 初始化时间
@@ -79,7 +98,7 @@
   /**
    * 根据条件查询
    */
-  function query(){
+  function query(pageNo){
 
     function dealDate(time, char){
       var tempStr = time;
@@ -93,10 +112,11 @@
       startTime: dealDate(self.startTime,['-','T',':']),
       endTime: dealDate(self.endTime,['-','T',':']),
       userId: self.userid,
-      pageSize: 50,
-      pageNo: 1
+      pageSize: self.$refs.Grid.pageSize,
+      pageNo: currentPage,
+      type: self.type
     }
-    detailList(param).then(function(res){
+    detailList( 'parameter=' + JSON.stringify(param)).then(function(res){
       if(!res.errcode){
         self.CPUUse = res.data.memUse;
         self.loadPageTime = res.data.loadTime + ' 毫秒';
@@ -106,6 +126,8 @@
       }
     })
   }
+
+  
 </script>
 
 <style scoped lang="less">
@@ -142,15 +164,14 @@
       box-sizing: border-box;
       height: 100%;
       .leftArea{
-        border: 1px solid #009688;
         width: 25%;
         height: 100%;
         box-sizing: border-box;
         float: left;
         .leftSpan{
           height: 50%;
-          border: 1px solid #009688;
           box-sizing: border-box;
+          border: 1px solid #009688;
           ul{
             list-style: decimal;
             margin: 0;
@@ -159,7 +180,7 @@
               font-size: 14px;
               line-height: 38px;
               .resultSpan{
-                color: #2aea78;
+                color: #009688;
                 margin-left: 5px;
                 font-size: 15px; 
               }
@@ -168,7 +189,6 @@
         }
       }
       .rightArea{
-        border: 1px solid #009688;
         width: 75%;
         box-sizing: border-box;
         height: 100%;
