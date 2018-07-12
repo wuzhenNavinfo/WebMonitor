@@ -14,8 +14,8 @@ class UserInfo {
         let sqlParam = [];
 
         let userParam = {
-            sql: 'INSERT INTO user_info(user_token, user_id, user_name, browser, login_time, location, ip, service_time) VALUES(?,?,?,?,?,?,?, NOW())',
-            params: [param.userToken, param.userId, param.userName, param.browser, param.loginTime, param.location, param.ip]
+            sql: 'INSERT INTO user_info(user_token, user_id, user_name, browser, login_time, location, ip, city, province, service_time) VALUES(?,?,?,?,?,?,?,?,?, NOW())',
+            params: [param.userToken, param.userId, param.userName, param.browser, param.loginTime, param.location, param.ip, param.city, param.province]
         };
 
         sqlParam.push(userParam);

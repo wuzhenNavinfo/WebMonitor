@@ -16,10 +16,10 @@ class Utils {
 		if (!str) {
 			return str;
 		}
+		str += ''; // 放置传递的是数字串
 		if (str.length != 8 && str.length != 14) {
 			throw new Error('参数的长度有误，请确认参数');
 		}
-		str += ''; // 放置传递的是数字串
 		if (str.length == 8) {
 			return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8) + " 00:00:00";
 		}

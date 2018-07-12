@@ -193,7 +193,6 @@ class StatisticsInfo {
 		var arr = this.detailByParam(beginTime, endTime, userId);
 		promises = promises.concat(arr);
 		return Promise.all(promises).then(function (data) {
-			console.info('aaa:', data);
 			return {
 				list: data[0],
 				overview: {
@@ -228,22 +227,21 @@ class StatisticsInfo {
 			sql4 += ` and u.user_id = ${userId} `;
 		}
 		if (beginTime) {
-			sql1_1 += ` and t.service_time >= ${beginTime} `;
-			sql1_2 += ` and t.service_time >= ${beginTime} `;
-			sql2 += ` and t.service_time >= ${beginTime} `;
-			sql3 += ` and t.service_time >= ${beginTime} `;
-			sql4 += ` and t.service_time >= ${beginTime} `;
+			sql1_1 += ` and t.service_time >= '${beginTime}' `;
+			sql1_2 += ` and t.service_time >= '${beginTime}' `;
+			sql2 += ` and t.service_time >= '${beginTime}' `;
+			sql3 += ` and t.service_time >= '${beginTime}' `;
+			sql4 += ` and t.service_time >= '${beginTime}' `;
 		}
 		if (endTime) {
-			sql1_1 += ` and t.service_time <= ${endTime} `;
-			sql1_2 += ` and t.service_time <= ${endTime} `;
-			sql2 += ` and t.service_time <= ${endTime} `;
-			sql3 += ` and t.service_time <= ${endTime} `;
-			sql4 += ` and t.service_time <= ${endTime} `;
+			sql1_1 += ` and t.service_time <= '${endTime}' `;
+			sql1_2 += ` and t.service_time <= '${endTime}' `;
+			sql2 += ` and t.service_time <= '${endTime}' `;
+			sql3 += ` and t.service_time <= '${endTime}' `;
+			sql4 += ` and t.service_time <= '${endTime}' `;
 		}
 
 		sql1 = ` select TRUNCATE((${sql1_1})/(${sql1_2}), 4) useRate from dual `;
-
 
 		let promise1 = dbHelper.execPromiseSelect(sql1).then(function (data) {
 			let ret = {};
