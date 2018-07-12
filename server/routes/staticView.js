@@ -1,6 +1,7 @@
 import express from 'express'
 import Statistics from '../server/view/statistics'
 import ResJson from '../utils/ResJson'
+import Utils from '../utils/Utils'
 
 var logger = require('../log4js').logger;
 
@@ -146,6 +147,54 @@ router.get('/view/staticList', function (req, res, next) {
 		let statistics = new Statistics();
 		let resJson = new ResJson();
 		statistics.staticList().then(function (data) {
+			resJson.data = data;
+			res.json(resJson);
+		}).catch(function (err) {
+			resJson.errcode = -1;
+			resJson.errmsg = err.message;
+			res.json(resJson);
+		});
+	} catch (error) {
+		logger.error(error);
+		next(error);
+	}
+});
+
+/**
+ * 列表界面统计
+ * type 1为异常，2为请求
+ */
+router.get('/view/detailList', function (req, res, next) {
+	try {
+		let resJson = new ResJson();
+		let parameter = req.query.parameter;
+		logger.info(parameter);
+		if (!parameter) {
+			resJson.errcode = -1;
+			resJson.errmsg = 'parameter为必填项';
+			res.json(resJson);
+			return;
+		}
+		let param = JSON.parse(parameter);
+		let pageNo = param.pageNo ? param.pageNo : 1;
+		let pageSize = param.pageSize ? param.pageSize : 20;
+		let type = param.type;
+		if (!type) {
+			resJson.errcode = -1;
+			resJson.errmsg = 'type字段为必填项';
+			res.json(resJson);
+			return;
+		}
+		let beginTime = param.begin;
+		let endTime = param.end;
+		let userId = param.userId;
+		beginTime = Utils.dateFormate(beginTime);
+		endTime = Utils.dateFormate(endTime);
+		logger.info(beginTime, endTime);
+
+		let statistics = new Statistics();
+
+		statistics.detailList(pageNo, pageSize, type, beginTime, endTime, userId).then(function (data) {
 			resJson.data = data;
 			res.json(resJson);
 		}).catch(function (err) {
