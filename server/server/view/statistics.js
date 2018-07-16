@@ -57,6 +57,25 @@ class StatisticsInfo {
     }
 
     /**
+     * 根据点坐标查询当前点的有结果异常的用户id
+     * @param location
+     * @return {Promise.<TResult>}
+     */
+    queryErrorByLocation(location) {
+        let sql = ` SELECT DISTINCT(u.user_id) userId FROM user_info u, req_info r WHERE u.location = ? AND u.user_token = r.user_token AND r.flag != 0 AND r.service_time > DATE_SUB(NOW(), INTERVAL 1 MONTH) `;
+        let param = [location];
+        return dbHelper.execPromiseSelect(sql, param).then(function (data) {
+            let list = [];
+            for (let i = 0; i < data.length; i++) {
+                list.push({
+                    userId: data[i].userId
+                })
+            }
+            return list;
+        });
+    }
+
+    /**
 	 * 浏览器版本分布的统计
 	 */
     browserList() {
@@ -333,7 +352,7 @@ class StatisticsInfo {
 	}
 
 	/**
-	 * 获取异常接口
+	 * 获取请求列表
 	 * @param pageNo
 	 * @param pageSize
 	 * @param beginTime
