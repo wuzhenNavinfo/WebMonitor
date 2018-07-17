@@ -16,7 +16,8 @@ export default {
     },
     methods: {
         init:init,
-        setData: setData
+        setData: setData,
+        mapClick:function(){}
     }
 }
 
@@ -33,7 +34,7 @@ function initMap(option){
     var mapOption = {
 	title : {
 		subtextStyle: {color: '#000000'},
-        text: '作业员分布图',
+        text: '',
         textStyle: {
             color: '#fff',
             fontWeight: 'normal',
@@ -108,7 +109,11 @@ chartObj = echarts.init(document.getElementById(vueObj[option.ref].$el.id));
 chartObj.setOption(mapOption);
 
 chartObj.on('click', function(param){
-     console.log(param);
+    for(var o in vueObj){
+        if(vueObj[o].mapClick){
+            vueObj[o].mapClick(param);
+        }
+    }
  });
 }
 /**

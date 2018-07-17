@@ -12,6 +12,7 @@ const express = require('express')
 const webpack = require('webpack')
 const proxyMiddleware = require('http-proxy-middleware')
 const webpackConfig = require('./webpack.dev.conf')
+var fs=require('fs');
 
 // default port where dev server listens for incoming traffic
 const port = process.env.PORT || config.dev.port
@@ -102,4 +103,45 @@ module.exports = {
   close: () => {
     server.close()
   }
+}
+
+var mappingConfig = JSON.parse(fs.readFileSync('./mappings/config.json'));
+// mappingConfig = [];
+for(var i=0; i<mappingConfig.length; i++){
+  var obj = JSON.parse(JSON.stringify(mappingConfig[i]));
+  
+  app.all(obj.request.url, function (req, res) {
+    var filePath;
+    for(var j=0; j<mappingConfig.length; j++){
+      if(req.url.indexOf(mappingConfig[j].request.url)>-1){
+        filePath = mappingConfig[j].response.path;
+      }
+    }
+    var realPath = path.join('./', filePath);    //这里设置自己的文件名称;
+    fs.exists(realPath, function (exists) {
+        if (!exists) {
+          res.writeHead(404, {
+                'Content-Type': 'text/plain'
+            });
+
+            res.send("This request URL " + realPath + " was not found on this server.");
+        } else {
+            fs.readFile(realPath, "binary", function (err, file) {
+                if (err) {
+                  res.writeHead(500, {
+                        'Content-Type': 'text/plain'
+                    });
+                    res.send(err);
+                } else {
+                    var contentType = "application/json";
+                    res.writeHead(200, {
+                        'Content-Type': contentType
+                    });
+                    res.write(file, "binary");
+                    res.send();
+                }
+            });
+        }
+    });
+  })
 }

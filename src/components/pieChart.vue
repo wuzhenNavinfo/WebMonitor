@@ -58,6 +58,7 @@ function initChart(option){
     if(option.data.length>0){
         vueObj[option.ref].noData = false;
         var extendOption = {
+            backgroundColor: 'rgba(51,51,51,0)',
             title: {
                 text: '' || option.title,
                 x: 'center',

@@ -61,6 +61,7 @@ function initChart(option){
     if(option.data.length>0){
         vueObj[option.ref].noData = false;
         var extendOption = {
+            backgroundColor: 'rgba(51,51,51,0)',
             title: { 
                 text: '' || option.title,
                 x: 'center',
@@ -76,14 +77,27 @@ function initChart(option){
                 data: option.xAxis || []
             },
             yAxis: {
-                type: 'value'
+                type: 'value',
+                axisLabel : {
+                    margin:'3'
+                }
+            },
+            label:{
+                normal: {
+                    show: true,
+                }
             },
             series: [{
                 type: 'bar',
+                center: ['20px','60%'],
                 barWidth: 10,
                 itemStyle: {
                     normal: {
-                        color: '#009688'
+                        color: '#009688',
+                        label: {
+                            show: true,
+                            position: 'top'
+                        }
                     }
                 },
                 data: option.data || []
