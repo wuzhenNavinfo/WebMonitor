@@ -179,7 +179,7 @@ class StatisticsInfo {
 			ret.errUserCount = data.length;
 			let arr = [];
 			for (let i = 0; i < data.length; i++) {
-				arr.push(ret[i]['user_id']);
+				arr.push(data[i]['user_id']);
 			}
 			ret.errUserIds = arr.join(',');
 			return ret;
