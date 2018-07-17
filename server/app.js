@@ -10,6 +10,8 @@ var debug = require('debug')('myapp:server');
 const cluster = require('cluster');
 const cpuNums = require('os').cpus().length;
 
+const listeningPort = 5000;
+
 var app = express();
 
 // uncomment after placing your favicon in /public
@@ -72,7 +74,7 @@ if(cluster.isMaster){
         console.log(`worker${worker.id} is online now`)
     });
 }else{
-    app.listen(3000);
+    app.listen(listeningPort);
 }
 
 /***************************cluster -- end********************************/

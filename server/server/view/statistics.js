@@ -313,7 +313,7 @@ class StatisticsInfo {
 	 */
 	queryErrorList(pageNo, pageSize, beginTime, endTime, userId) {
 		let param = [];
-		let sql = ` SELECT e.* FROM error_info e LEFT JOIN user_info u  ON e.user_token = u.user_token where 1 = 1 `;
+		let sql = ` SELECT e.*, u.user_name FROM error_info e LEFT JOIN user_info u  ON e.user_token = u.user_token where 1 = 1 `;
 		if (userId) {
 			sql += ` and u.user_id = ?`;
 			param.push(userId);
@@ -335,6 +335,7 @@ class StatisticsInfo {
 			let list = [];
 			for (let i = 0; i < data.length; i++) {
 				list.push({
+                    userName: data[i]['user_name'],
 					id: data[i]['id'],
 					userToken: data[i]['user_token'],
 					msg: data[i]['msg'],
@@ -362,7 +363,7 @@ class StatisticsInfo {
 	 */
 	queryReqList(pageNo, pageSize, beginTime, endTime, userId) {
 		let param = [];
-		let sql = ` SELECT r.* FROM req_info r LEFT JOIN user_info u ON r.user_token = u.user_token WHERE 1 = 1  `;
+		let sql = ` SELECT r.*, u.user_name FROM req_info r LEFT JOIN user_info u ON r.user_token = u.user_token WHERE 1 = 1  `;
 		if (userId) {
 			sql += ` and u.user_id = ? `;
 			param.push(userId);
@@ -384,6 +385,7 @@ class StatisticsInfo {
 			let list = [];
 			for (let i = 0; i < data.length; i++) {
 				list.push({
+                    userName: data[i]['user_name'],
 					id: data[i]['id'],
 					userToken: data[i]['user_token'],
 					url: data[i]['url'],
