@@ -9,7 +9,7 @@
 
 export const appConfig = {
   appName: 'WebMonitor',
-  serviceUrl: 'http://localhost:3000' // 开发环境的服务地址
+  serviceUrl: 'http://192.168.4.130:3000' // 开发环境的服务地址 http://localhost:3000
 }
 
 export const appUtil = {
