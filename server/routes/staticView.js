@@ -31,6 +31,44 @@ router.get('/view/mapShow', function (req, res, next) {
 });
 
 /**
+ * 根据点坐标查询当前点的有结果异常的用户id
+ */
+router.get('/view/queryErrorByLocation', function (req, res, next) {
+    try {
+        let resJson = new ResJson();
+        let parameter = req.query.parameter;
+        if (!parameter) {
+            resJson.errcode = -1;
+            resJson.errmsg = 'parameter为必填项';
+            res.json(resJson);
+            return;
+        }
+        let param = JSON.parse(parameter);
+        let location = param.location;
+        if (!location) {
+            resJson.errcode = -1;
+            resJson.errmsg = 'location字段为必填项';
+            res.json(resJson);
+            return;
+        }
+
+        let statistics = new Statistics();
+
+        statistics.queryErrorByLocation(location).then(function (data) {
+            resJson.data = data;
+            res.json(resJson);
+        }).catch(function (err) {
+            resJson.errcode = -1;
+            resJson.errmsg = err.message;
+            res.json(resJson);
+        });
+    } catch (error) {
+        logger.error(error);
+        next(error);
+    }
+});
+
+/**
  * 用户占比接口
  * 是否需要try catch, 需要，主要目的是用于获取参数时的异常处理，调用statistics.userOnline()异常时候需要使用catch捕获异常
  *
@@ -168,7 +206,6 @@ router.get('/view/detailList', function (req, res, next) {
 	try {
 		let resJson = new ResJson();
 		let parameter = req.query.parameter;
-		logger.info(parameter);
 		if (!parameter) {
 			resJson.errcode = -1;
 			resJson.errmsg = 'parameter为必填项';
