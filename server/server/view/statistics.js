@@ -13,7 +13,8 @@ class StatisticsInfo {
 	 */
     userOnline() {
     	// 查询 用户的最后操作时间距离当前时间的小时
-        let sql = `SELECT DISTINCT(u.user_id) , TIMESTAMPDIFF(HOUR, MAX(r.service_time), NOW()) lead_time FROM user_info u LEFT JOIN req_info r ON u.user_token = r.user_token WHERE r.service_time IS NOT NULL GROUP BY u.user_id`;
+        let sql = ` SELECT DISTINCT(u.user_id) , TIMESTAMPDIFF(HOUR, MAX(r.service_time), NOW()) lead_time FROM user_info u LEFT JOIN req_info r ON u.user_token = r.user_token
+                    WHERE r.service_time IS NOT NULL GROUP BY u.user_id `;
         return dbHelper.execPromiseSelect(sql).then(function (data) {
         	let list = [];
         	let onLine = 0;
@@ -43,7 +44,7 @@ class StatisticsInfo {
      * 加载地图显示用户数以及坐标的方法
      */
     mapShow() {
-	    let sql = `SELECT  location, COUNT(location) user_count FROM user_info GROUP BY location`;
+	    let sql = ` SELECT   location, COUNT(DISTINCT(user_id)) user_count  FROM  user_info  GROUP BY location, user_id `;
 	    return dbHelper.execPromiseSelect(sql).then(function (data) {
 		    let list = [];
 		    for (let i = 0; i < data.length; i++) {
@@ -97,9 +98,10 @@ class StatisticsInfo {
 	 * 统计平均接口时间最长的10个省份
 	 */
 	interfaceTime() {
-		let sql = ` SELECT u.province, TRUNCATE(AVG(r.use_time), 2) average_use_time FROM user_info u LEFT JOIN req_info r 
-					ON u.user_token = r.user_token 
-					WHERE r.use_time > 0 AND r.service_time > DATE_SUB(NOW(), INTERVAL 1 MONTH) GROUP BY u.province ORDER BY  average_use_time DESC LIMIT 0, 10 `;
+		let sql = ` SELECT u.province, TRUNCATE(AVG(r.use_time), 2) average_use_time FROM user_info u, req_info r 
+					where u.user_token = r.user_token 
+					and r.use_time > 0 AND r.service_time > DATE_SUB(NOW(), INTERVAL 1 MONTH) GROUP BY u.province 
+					ORDER BY  average_use_time DESC LIMIT 0, 10 `;
 		return dbHelper.execPromiseSelect(sql).then(function (data) {
 			let list = [];
 			for (let i = 0; i < data.length; i++) {
@@ -116,8 +118,8 @@ class StatisticsInfo {
 	 * 统计平均页面渲染时间最长的10个省份(最近一个月)
 	 */
 	loadPageTime() {
-		let sql = ` SELECT u.province, TRUNCATE(AVG(t.target_value), 2) average_value FROM user_info u LEFT JOIN target_info t 
-				ON u.user_token = t.user_token WHERE t.target_code = 'domTimeout' AND t.service_time > DATE_SUB(NOW(), INTERVAL 1 MONTH)
+		let sql = ` SELECT u.province, TRUNCATE(AVG(t.target_value), 2) average_value FROM user_info u, target_info t 
+				where u.user_token = t.user_token and t.target_code = 'domTimeout' AND t.service_time > DATE_SUB(NOW(), INTERVAL 1 MONTH)
 				GROUP BY u.province ORDER BY average_value DESC LIMIT 0, 10 `;
 		return dbHelper.execPromiseSelect(sql).then(function (data) {
 			let list = [];
@@ -137,7 +139,7 @@ class StatisticsInfo {
 	interfaceError() {
 		let sql = ` SELECT u.province, COUNT(r.flag) num FROM user_info u , req_info r 
 					WHERE u.user_token = r.user_token AND r.flag != 0 and r.service_time > DATE_SUB(NOW(), INTERVAL 1 MONTH)
-					GROUP BY u.province ORDER BY num DESC LIMIT 0, 10`;
+					GROUP BY u.province ORDER BY num DESC LIMIT 0, 10 `;
 		return dbHelper.execPromiseSelect(sql).then(function (data) {
 			let list = [];
 			for (let i = 0; i < data.length; i++) {
@@ -157,14 +159,16 @@ class StatisticsInfo {
 	}
 
 	/**
-	 * 首页列表接口，统计近一周的接口错误总数，接口平均耗时，程序异常人员数量
+	 * 首页列表接口，统计近一个月的接口错误总数，接口平均耗时，程序异常人员数量
 	 */
 	staticList() {
 		let sql1 = ` SELECT COUNT(0) error_count FROM req_info WHERE flag != 0 and service_time > DATE_SUB(NOW(), INTERVAL 1 MONTH) `; // DATE_SUB(CURDATE(), INTERVAL 1 DAY) 近一月
 		let sql2 = ` SELECT TRUNCATE(AVG(use_time), 2) use_time FROM req_info WHERE flag != 0 AND use_time > 0 AND service_time > DATE_SUB(NOW(), INTERVAL 1 MONTH) `;
-		let sql3 = ` SELECT DISTINCT(u.user_id) FROM error_info e LEFT JOIN user_info u 
-						ON e.user_token = u.user_token 
-						WHERE e.service_time > DATE_SUB(NOW(), INTERVAL 1 MONTH) `;
+		let sql3 = ` SELECT DISTINCT(u.user_id) user_id, user_name FROM user_info u, error_info e WHERE u.user_token = e.user_token  AND e.service_time > DATE_SUB(NOW(), INTERVAL 1 MONTH); `;
+        //
+		// let sql3 = ` SELECT DISTINCT(u.user_id) user_id FROM error_info e LEFT JOIN user_info u
+		// 				ON e.user_token = u.user_token
+		// 				WHERE e.service_time > DATE_SUB(NOW(), INTERVAL 1 MONTH) `;
 		let promise1 = dbHelper.execPromiseSelect(sql1).then(function (data) {
 			return {
 				errorCount : data[0]['error_count']
@@ -178,11 +182,14 @@ class StatisticsInfo {
 		let promise3 = dbHelper.execPromiseSelect(sql3).then(function (data) {
 			let ret = {};
 			ret.errUserCount = data.length;
-			let arr = [];
+			let arrId = [];
+			let arrName = [];
 			for (let i = 0; i < data.length; i++) {
-				arr.push(data[i]['user_id']);
+                arrId.push(data[i]['user_id']);
+                arrName.push(data[i]['user_name']);
 			}
-			ret.errUserIds = arr.join(',');
+			ret.errUserIds = arrId.join(',');
+			ret.errUserName = arrName.join(',');
 			return ret;
 		});
 
@@ -191,7 +198,8 @@ class StatisticsInfo {
 				interfaceError: data[0].errorCount,
 				loadTime: data[1].loadTime,
 				errUserCount: data[2].errUserCount,
-				errUserIds: data[2].errUserIds
+				errUserIds: data[2].errUserIds,
+                errUserName: data[2].errUserName
 			};
 		});
 	}
