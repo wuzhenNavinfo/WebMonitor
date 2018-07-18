@@ -44,8 +44,8 @@ function initContent(content){
     vueObj[content.ref].$el.id = content.id || createUUID();
 
     var style = {
-        height: content.height || '300px',
-        width: content.width || '300px',
+        height: content.height || '100%',
+        width: content.width || '100%',
         position: 'relative'
     }
     for(var o in style){
@@ -78,8 +78,15 @@ function initChart(option){
             },
             yAxis: {
                 type: 'value',
+                minInterval:1,
                 axisLabel : {
-                    margin:'3'
+                    margin:'0',
+                    formatter:function(value){
+                        if(value >1000){
+                            value = value/1000 + ' K';
+                        }
+                        return value;
+                    }
                 }
             },
             label:{
