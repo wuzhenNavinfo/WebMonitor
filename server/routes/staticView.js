@@ -218,7 +218,7 @@ router.get('/view/detailList', function (req, res, next) {
 		let type = param.type;
 		if (!type) {
 			resJson.errcode = -1;
-			resJson.errmsg = 'type字段为必填项';
+			resJson.errmsg = 'type字段为必填项,值域为1和2';
 			res.json(resJson);
 			return;
 		}

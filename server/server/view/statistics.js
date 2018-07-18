@@ -62,13 +62,14 @@ class StatisticsInfo {
      * @return {Promise.<TResult>}
      */
     queryErrorByLocation(location) {
-        let sql = ` SELECT DISTINCT(u.user_id) userId FROM user_info u, req_info r WHERE u.location = ? AND u.user_token = r.user_token AND r.flag != 0 AND r.service_time > DATE_SUB(NOW(), INTERVAL 1 MONTH) `;
+        let sql = ` SELECT DISTINCT(u.user_id) userId ,user_name userName  FROM user_info u, req_info r WHERE u.location = ? AND u.user_token = r.user_token AND r.flag != 0 AND r.service_time > DATE_SUB(NOW(), INTERVAL 1 MONTH) `;
         let param = [location];
         return dbHelper.execPromiseSelect(sql, param).then(function (data) {
             let list = [];
             for (let i = 0; i < data.length; i++) {
                 list.push({
-                    userId: data[i].userId
+                    userId: data[i].userId,
+                    userName: data[i].userName
                 })
             }
             return list;
@@ -313,7 +314,7 @@ class StatisticsInfo {
 	 */
 	queryErrorList(pageNo, pageSize, beginTime, endTime, userId) {
 		let param = [];
-		let sql = ` SELECT e.* FROM error_info e LEFT JOIN user_info u  ON e.user_token = u.user_token where 1 = 1 `;
+		let sql = ` SELECT e.*, u.user_name FROM error_info e LEFT JOIN user_info u  ON e.user_token = u.user_token where 1 = 1 `;
 		if (userId) {
 			sql += ` and u.user_id = ?`;
 			param.push(userId);
@@ -335,6 +336,7 @@ class StatisticsInfo {
 			let list = [];
 			for (let i = 0; i < data.length; i++) {
 				list.push({
+                    userName: data[i]['user_name'],
 					id: data[i]['id'],
 					userToken: data[i]['user_token'],
 					msg: data[i]['msg'],
@@ -362,7 +364,7 @@ class StatisticsInfo {
 	 */
 	queryReqList(pageNo, pageSize, beginTime, endTime, userId) {
 		let param = [];
-		let sql = ` SELECT r.* FROM req_info r LEFT JOIN user_info u ON r.user_token = u.user_token WHERE 1 = 1  `;
+		let sql = ` SELECT r.*, u.user_name FROM req_info r LEFT JOIN user_info u ON r.user_token = u.user_token WHERE 1 = 1  `;
 		if (userId) {
 			sql += ` and u.user_id = ? `;
 			param.push(userId);
@@ -384,6 +386,7 @@ class StatisticsInfo {
 			let list = [];
 			for (let i = 0; i < data.length; i++) {
 				list.push({
+                    userName: data[i]['user_name'],
 					id: data[i]['id'],
 					userToken: data[i]['user_token'],
 					url: data[i]['url'],
