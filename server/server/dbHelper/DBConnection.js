@@ -109,7 +109,6 @@ var execPromiseSelect = function (sql, param = null) {
             logger.error('执行sql失败:', error);
             return reject(error);
         } else {
-	        logger.info('执行sql成功结果：', results);
             return resolved(results)
         }
       });
