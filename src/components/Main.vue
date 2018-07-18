@@ -7,9 +7,12 @@
     </div>
     <div class="change">
       <map-chart ref="map"></map-chart>
-      <div class="mapDetail" style="display:none">
-        <div class="close"></div>
+      <div class="mapDetail" v-show="showMapDetail">
+        {{mapDetail}}
+        <div class="close" v-on:click="showMapDetail=false"></div>
       </div>
+      <div class="systemTitle" style="background: url(static/title.png);background-size: 440px 100px;"></div>
+      <div class="jumpToDetail" style="background-image: url(static/jump.jpg);" title="跳转至详情页面" v-on:click="jumpToDetail"></div>
     </div>
     <div class="stable">
       <pie-chart class="arrange-v" ref="browser"></pie-chart>
@@ -32,7 +35,7 @@
   import pieChart from './pieChart.vue';
   import barChart from './barChart.vue';
   import mapChart from './mapChart.vue';
-  import { mapShow, userOnline, interfaceTime, loadPageTime, browser, interfaceError, staticList, detailList } from '../dataService/api';
+  import { mapShow, userOnline, interfaceTime, loadPageTime, browser, interfaceError, staticList, detailList, queryErrorByLocation } from '../dataService/api';
   import { appUtil } from '../config';
   import { Utils } from '../common/js/utils.js';
   var self;
@@ -44,7 +47,9 @@
         errorTotal:0,
         averageTime:'无数据',
         errorUser:'无数据',
-        errorUserID: '无数据'
+        errorUserID: '无数据',
+        mapDetail: '',
+        showMapDetail:false
       }
     },
     mounted:function(){
@@ -66,7 +71,9 @@
       barChart,
       mapChart
     },
-    methods: {}
+    methods: {
+      jumpToDetail: jumpToDetail
+    }
   }
 
   function initUserOnline(){
@@ -95,7 +102,7 @@
           ref: 'interfaceTime'
         },
         option: {
-          title: '接口请求时间TOP10省份',
+          title: '接口请求耗时TOP10省份',
           xAxis: [],
           data: []
         }
@@ -121,7 +128,7 @@
           ref: 'loadPageTime'
         },
         option: {
-          title: '页面渲染时间TOP10省份',
+          title: '页面渲染耗时TOP10省份',
           xAxis: [],
           data: []
         }
@@ -139,6 +146,9 @@
 
   function getBrowser(){
     browser().then(function(res){
+      res.data.forEach(function(ele){
+        ele.name = ele.name.substring(ele.name.indexOf('/') + 1,ele.name.length)
+      });
       self.$refs.browser.init({
         content: {
           id: 'browserPie',
@@ -212,7 +222,30 @@
         self.$refs.map.setData(mapData)
       }
     })
-    
+
+    self.$refs.map.mapClick = function(data){
+      var param = {
+        location: data.data.coord.join(',')
+      }
+      queryErrorByLocation({parameter:JSON.stringify(param)}).then(function(res){
+        if(!res.errcode){
+          self.showMapDetail= true;
+          if(res.data.length != 0){
+            var tempName = '';
+            ele.data.forEach(function(ele){
+              tempName = (ele.userName + ', ');
+            })
+            self.mapDetail = '接口报错用户有： ' + tempName;
+          }else{
+            self.mapDetail = '无报错信息';   
+          }
+        }
+      })
+    }
+  }
+
+  function jumpToDetail(){
+    window.open('index.html#/query');
   }
 
 </script>
@@ -222,7 +255,6 @@
   .container {
     height: 100%;
     width: 100%;
-    background-color: #333; // rgb(6, 19, 37)
   }
   .container{
     height: 100%;
@@ -270,13 +302,36 @@
       position: relative;
       .mapDetail{
         width: 200px;
-        min-height: 40px;
+        min-height: 80px;
         position: absolute;
-        border: 1px solid #fff;
         top: 100px;
-        background-color: #aaa;
+        background-color: #999;
         left: 30px;
+        -webkit-box-shadow: 0 0 6px #fff;
         box-shadow: 0 0 6px #fff;
+        color: #fff;
+        padding: 10px 0 0 10px;
+        font-size: 14px;
+      }
+      .systemTitle{
+        position: absolute;
+        width: 440px;
+        height: 100px;
+        top: 36px;
+        background-size: 440px 100px;
+        right: 0;
+        margin: auto;
+        left: 0;
+      }
+      .jumpToDetail{
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-size: 100%;
+        top: 60px;
+        border-radius: 4px;
+        right: 52px;
+        cursor: pointer;
       }
     }
 
