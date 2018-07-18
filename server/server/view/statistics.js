@@ -62,13 +62,14 @@ class StatisticsInfo {
      * @return {Promise.<TResult>}
      */
     queryErrorByLocation(location) {
-        let sql = ` SELECT DISTINCT(u.user_id) userId FROM user_info u, req_info r WHERE u.location = ? AND u.user_token = r.user_token AND r.flag != 0 AND r.service_time > DATE_SUB(NOW(), INTERVAL 1 MONTH) `;
+        let sql = ` SELECT DISTINCT(u.user_id) userId ,user_name userName  FROM user_info u, req_info r WHERE u.location = ? AND u.user_token = r.user_token AND r.flag != 0 AND r.service_time > DATE_SUB(NOW(), INTERVAL 1 MONTH) `;
         let param = [location];
         return dbHelper.execPromiseSelect(sql, param).then(function (data) {
             let list = [];
             for (let i = 0; i < data.length; i++) {
                 list.push({
-                    userId: data[i].userId
+                    userId: data[i].userId,
+                    userName: data[i].userName
                 })
             }
             return list;

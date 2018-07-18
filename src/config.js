@@ -9,7 +9,8 @@
 
 export const appConfig = {
   appName: 'WebMonitor',
-  serviceUrl: 'http://192.168.4.130:3000' // 开发环境的服务地址 http://localhost:3000
+  // serviceUrl: 'http://localhost:3000' // 开发环境的服务地址 http://localhost:3000
+  serviceUrl: 'http://fs-road.navinfo.com/dev/trunk/webMonitor/service' // 生产环境 ip方式：http://192.168.4.130:5000 域名方式:http://fs-road.navinfo.com/dev/trunk/webMonitor/service
 }
 
 export const appUtil = {
