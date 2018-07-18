@@ -150,8 +150,8 @@ class StatisticsInfo {
 			}
 			if (list.length == 0) { // 如果没有查询出数据，默认给陕西并且值为0
 				list.push({
-					value: 'Shaanxi',
-					name: 0
+					value: 0,
+					name: 'Shaanxi'
 				})
 			}
 			return list;
