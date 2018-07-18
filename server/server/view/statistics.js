@@ -44,7 +44,7 @@ class StatisticsInfo {
      * 加载地图显示用户数以及坐标的方法
      */
     mapShow() {
-	    let sql = ` SELECT   location, COUNT(DISTINCT(user_id)) user_count  FROM  user_info  GROUP BY location, user_id `;
+	    let sql = ` SELECT   location, COUNT(DISTINCT(user_id)) user_count  FROM  user_info  GROUP BY location `;
 	    return dbHelper.execPromiseSelect(sql).then(function (data) {
 		    let list = [];
 		    for (let i = 0; i < data.length; i++) {
