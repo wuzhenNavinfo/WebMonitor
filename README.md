@@ -96,7 +96,7 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 
 * 1.2 根据电脑操作系统，选择下载并安装对应的版本到磁盘文件夹中。<br>
 
-* 1.3 这样一来鼠标单击右键才会有**Git**相关操作,日后方便更新代码等操作<br>
+* 1.3 这样一来鼠标单击右键才会有**Git**相关操作,日后方便更新代码等操作。<br>
 
 ![Right Button](https://github.com/870479457/WebMonitor/blob/master/static/readme/Right%20Button.png)
 
@@ -106,7 +106,7 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 
 >*node.js*的优势在于:借助*JavaScript*天生的事件驱动机制加V8高性能引擎，使编写高性能Web服务轻而易举,无需考虑浏览器兼容性问题。安装方法如下：
 
-* 2.1 安装*node.js*：
+* 2.1 安装*node.js*。
 
 * 2.1.1 首先需要进入*node.js*官网: <https://nodejs.org/en/>。<br>
 
@@ -115,12 +115,11 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 >安装完成*Node.js*后,*windows键+R*打开运行界面,输入*cmd*呼出命令行，输入*node -v*回车即可提示当前*node.js*版本号。
 <br/>
 
-3. Node.js的包管理工具——*npm*
+3. Node.js的包管理工具——*npm*：
 
 >在Node.js上开发时，会用到很多别人写的JavaScript代码。大家都把自己开发的模块打包后放到npm官网上,如果要使用,直接通过npm安装就可以直接用,而且npm可以根据依赖关系，把所有依赖的包都下载下来并管理起来。否则，靠我们自己手动管理，肯定既麻烦又容易出错。<br/>
 
-* 3.1 npm不需要去网站上下载什么,它随着node.js已经顺带着了,我们只需要打开命令行,进入项目目录盘符中，如图：我的项目盘符进入后显示为：**E:\work\WebMonitor>**：<br/>
-
+* 3.1 npm不需要去网站上下载什么,它随着node.js已经顺带着了,我们只需要打开命令行,进入项目目录盘符中，例如：我的项目盘符进入后显示为：**E:\work\WebMonitor>**。<br/>
 
 * 3.2 由于安转包的时候下载的速度太慢,安装之前，我们需要切换镜像为淘宝的国内镜像：命令行输入：*npm config set registry https://registry.npm.taobao.org* 即可。切换完成后，可以通过命令行输入：*npm config get registry*来查看是否切换成功。
 
