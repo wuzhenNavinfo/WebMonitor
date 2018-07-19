@@ -60,8 +60,7 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 ### 获取代码
 
 1.  **github**克隆项目内容,即下载代码:<br>
-
-![githublogo](https://github.com/870479457/WebMonitor/blob/master/static/readme/githublogo.png)
+  ![githublogo](https://github.com/870479457/WebMonitor/blob/master/static/readme/githublogo.png)
 
 * 1.1 首先进入`github`主页: <https://github.com>。<br>
 
@@ -72,8 +71,7 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 * 1.4 点击页面导航栏`Code`下的`Clone or download`按钮，复制*web站点URL*。<br>
 
 * 1.5 在本地主机任意一个磁盘下创建项目文件夹，在此目录下右键选择*git clone*即可将项目内容克隆到该文件夹中(需要安装`GIT`才可右键*git clone*)，如图：<br>
-
-![Right Button](https://github.com/870479457/WebMonitor/blob/master/static/readme/Right%20Button.png)
+  ![Right Button](https://github.com/870479457/WebMonitor/blob/master/static/readme/Right%20Button.png)
 
   
 
@@ -99,12 +97,10 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 * 1.2 根据电脑操作系统，选择下载并安装对应的版本到磁盘文件夹中。<br>
 
 * 1.3 这样一来鼠标单击右键才会有**Git**相关操作,日后方便更新代码等操作。<br>
-
-![Right Button](https://github.com/870479457/WebMonitor/blob/master/static/readme/Right%20Button.png)
+  ![Right Button](https://github.com/870479457/WebMonitor/blob/master/static/readme/Right%20Button.png)
 
 2. 基于*JavaScript*语言和V8引擎的开源Web服务器项目——*node.js*：<br>
-
-![nodejslogo](https://github.com/870479457/WebMonitor/blob/master/static/readme/nodejslogo.png)
+  ![nodejslogo](https://github.com/870479457/WebMonitor/blob/master/static/readme/nodejslogo.png)
 
 >*node.js*的优势在于:借助*JavaScript*天生的事件驱动机制加V8高性能引擎，使编写高性能Web服务轻而易举,无需考虑浏览器兼容性问题。安装方法如下：
 
