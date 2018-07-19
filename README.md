@@ -3,7 +3,7 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 
 
 
-![WebMonitor](URL)
+![WebMonitor](https://github.com/870479457/WebMonitor/blob/master/static/readme/webmonitor.png)
 
 ## 目录
 
@@ -63,7 +63,7 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 
 ### 实现项目流程图：
 
-![flowchart](URL)
+![flowchart](https://github.com/870479457/WebMonitor/blob/master/static/readme/%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B%E5%9B%BE.png)
 
 <a  name="获取代码"></a>
 
@@ -73,11 +73,11 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 
   
 
-![githublogo](URL)
+![githublogo](https://github.com/870479457/WebMonitor/blob/master/static/readme/githublogo.png)
 
 * 1.1 首先进入`github`主页: <https://github.com>，如图：<br>
 
-![github](URL)
+![github](https://github.com/870479457/WebMonitor/blob/master/static/readme/GIThub.png)
 
 * 1.2 注册`github`账户<br>
 
@@ -85,11 +85,11 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 
 * 1.4 点击页面导航栏`Code`下的`Clone or download`按钮，复制*web站点URL*，如图：<br>
 
-![CodeURL](URL)
+![CodeURL](https://github.com/870479457/WebMonitor/blob/master/static/readme/codeURL.png)
 
 * 1.5 在本地主机任意一个磁盘下创建项目文件夹，在此目录下右键选择*git clone*即可将项目内容克隆到该文件夹中(需要安装`GIT`才可右键*git clone*)，如图：<br>
 
-![Git Clone](URL)
+![Git Clone](https://github.com/870479457/WebMonitor/blob/master/static/readme/Right%20Button.png)
 
   
 
@@ -101,9 +101,9 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 
   | Logo | 网址  | 名称 |
 | :------------ |:---------------:| -----:|
-| ![Github](url)      | https://github.com/ | Github |
-| ![nodejs](url)      | http://nodejs.cn/        |   node.js |
-| ![GIT](url) | https://git-scm.com |Git|
+| ![Github](https://github.com/870479457/WebMonitor/blob/master/static/readme/githublogo.png)      | https://github.com/ | Github |
+| ![nodejs](https://github.com/870479457/WebMonitor/blob/master/static/readme/nodejslogo.png)      | http://nodejs.cn/        |   node.js |
+| ![GIT](https://github.com/870479457/WebMonitor/blob/master/static/readme/GITlogo.png) | https://git-scm.com |Git|
 
 
 <br>
@@ -111,18 +111,18 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 
 * 1.1 首先进入**GIT**下载页面: <https://git-scm.com/downloads>，如图：<br>
 
-![GITDownloads](URL)
+![GITDownloads](https://github.com/870479457/WebMonitor/blob/master/static/readme/GITDownloads.png)
 
 * 1.2 根据电脑操作系统，选择下载并安装对应的版本到磁盘文件夹中。<br>
 
 * 1.3 这样一来鼠标单击右键才会有**Git**相关操作,日后方便更新代码等操作<br>
 
-![Right Button](URL)
+![Right Button](https://github.com/870479457/WebMonitor/blob/master/static/readme/Right%20Button.png)
 
 2. 基于*JavaScript*语言和V8引擎的开源Web服务器项目——*node.js*
 <br>
 
-![nodejslogo](URL)
+![nodejslogo](https://github.com/870479457/WebMonitor/blob/master/static/readme/nodejslogo.png)
 
 >*node.js*的优势在于:借助*JavaScript*天生的事件驱动机制加V8高性能引擎，使编写高性能Web服务轻而易举,无需考虑浏览器兼容性问题。安装方法如下：
 
@@ -131,14 +131,11 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 * 2.1.1 首先需要进入*node.js*官网: <https://nodejs.org/en/>。<br>
 
 * 2.1.2 选择*LTS(稳定版)*或*Current(常用版)*版本进行下载。<br>
-
-![nodejs](URL)
-* 2.1.3 安装*node.js*，默认勾选方可。<br>
-
+* 2.1.3 安装*node.js*，默认勾选项方可。<br>
 >安装完成*Node.js*后,*windows键+R*打开运行界面,输入*cmd*呼出命令行，输入*node -v*回车即可提示当前*node.js*版本号。
 <br/>
 
-![nodejsbanben](URL)
+![nodejsbanben](https://github.com/870479457/WebMonitor/blob/master/static/readme/nodejsbanben.png)
 
 >也可输入*node*进入*Node.js*的交互环境。在交互环境下,你可以输入任意*JavaScript*语句,回车后将得到输出结果。
 要退出*Node.js*环境，连按两次*Ctrl+C*。(注：如果版本号小于*v7.6.0*，说明*Node.js*版本不对,需要重新安装*node.js*新版本。)
@@ -159,12 +156,12 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 
 * 3.3 接下来在命令行：**E:\work\WebMonitor>**中输入**npm install**即可开始安装npm,等待若干分钟后会提示安装成功响应字符,若出现ERR开头的提示符,即安装失败，安装失败大多由于网络不稳定,需要多尝试几次或重启电脑。<br/>
 
-![npminstall](URL)
+![npminstall](https://github.com/870479457/WebMonitor/blob/master/static/readme/npminstall.png)
 * 3.4 安装完成后换行输入***npm start***即可启动项目（此时会有npm的命令提示符启动，显示为： *DONE Compiled successfully in 1ms*）,随之项目也会以网页形式打开,到此项目基本运行起来了。<br/>
 
   
 
-![npmstart](URL) 
+![npmstart](https://github.com/870479457/WebMonitor/blob/master/static/readme/npmstart.png) 
 
 <a  name="代码插入"></a>
 
