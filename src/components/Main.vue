@@ -19,10 +19,10 @@
       <bar-chart class="arrange-v" ref="interfaceError"></bar-chart>
       <div class="arrange-v" style="width:300px;height:30%">
         <ul>
-          <li><span>近一周接口错误总数：<span class="resultSpan">{{errorTotal}}</span></span></li>
-          <li><span>近一周接口平均耗时： <span class="resultSpan">{{averageTime}}</span></span></li>
+          <li><span>近一月接口错误总数：<span class="resultSpan">{{errorTotal}}</span></span></li>
+          <li><span>近一月接口平均耗时： <span class="resultSpan">{{averageTime}}</span></span></li>
           <li style="position:relative">
-            <span>近一周异常人员数量：<span class="resultSpan" v-on:mouseover="showUserId=true" v-on:mouseleave="showUserId=false" style="text-decoration: underline;cursor: pointer;">{{errorUser}}</span></span>
+            <span>近一月异常人员数量：<span class="resultSpan" v-on:mouseover="showUserId=true" v-on:mouseleave="showUserId=false" style="text-decoration: underline;cursor: pointer;">{{errorUser}}</span></span>
             <div v-show="showUserId" class="errorTip"><span>错误用户ID：{{errorUserID}}</span></div>
           </li>
         </ul>
@@ -82,6 +82,7 @@
         content: {
           id: 'userOnlinePie',
           height:'30%',
+          width: '300px',
           ref: 'userOnline'
         },
         option: {
@@ -99,6 +100,7 @@
         content:{
           id: 'interfaceTimePie',
           height: '30%',
+          width: '300px',
           ref: 'interfaceTime'
         },
         option: {
@@ -125,6 +127,7 @@
         content:{
           id: 'loadPageTimePie',
           height: '30%',
+          width: '300px',
           ref: 'loadPageTime'
         },
         option: {
@@ -153,6 +156,7 @@
         content: {
           id: 'browserPie',
           height:'30%',
+          width: '300px',
           ref: 'browser'
         },
         option: {
@@ -169,6 +173,7 @@
         content:{
           id: 'interfaceErrorPie',
           height: '30%',
+          width: '300px',
           ref: 'interfaceError'
         },
         option: {
@@ -191,10 +196,10 @@
   function getStaticList(){
     staticList().then(function(res){
       if(!res.errcode){
-        self.errorTotal = res.data.interfaceError;
-        self.averageTime = res.data.loadTime;
-        self.errorUser = res.data.errUserCount;
-        self.errorUserID = res.data.errUserIds;
+        self.errorTotal = res.data.interfaceError || 0 + ' 个';
+        self.averageTime = res.data.loadTime || 0 + ' 毫秒';
+        self.errorUser = res.data.errUserCount || 0 + ' 个';
+        self.errorUserID = res.data.erruserName || '无错误用户';
       }
     })
   }
@@ -231,11 +236,11 @@
         if(!res.errcode){
           self.showMapDetail= true;
           if(res.data.length != 0){
-            var tempName = '';
-            ele.data.forEach(function(ele){
-              tempName = (ele.userName + ', ');
+            var tempName = [];
+            res.data.forEach(function(ele){
+              tempName.push(ele.userName);
             })
-            self.mapDetail = '接口报错用户有： ' + tempName;
+            self.mapDetail = '接口报错用户有： ' + tempName.join(', ');
           }else{
             self.mapDetail = '无报错信息';   
           }
@@ -266,6 +271,8 @@
       height: 100%;
       text-align: center;
       .arrange-v{
+        height:30%;
+        width: 300px;
         margin: 15px auto;
         padding-top: 10px;
         box-shadow: 0px 0px 4px #009683;
