@@ -10,8 +10,6 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 
 *  [开发环境部署](#开发环境部署)
 
-*  [背景介绍](#背景介绍)
-
 *  [项目介绍](#项目介绍)
 
 *  [使用说明](#使用说明)
@@ -33,7 +31,7 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 <a  name="开发环境部署"></a>
 
 ## 开发环境部署说明：
- 1: nginx配置：
+ >1: nginx配置：
  nginx使用的是 192.168.4.188机器上的/usr/local/nginx-svr-dev/conf/fastmap/。
  修改upstream.conf 文件增加了webMonitorCluster，service.conf文件增加了/dev/trunk/webMonitor/service/，webapps.conf增加了/dev/trunk/webMonitor/。
  重启nginx的方法: 进入到/usr/local/nginx-svr-dev/sbin 目录下，然后执行 ./nginx -t 先检查下配置文件是否正确，如果正确然后在执行 ./nginx -s reload 重新启动
@@ -41,20 +39,11 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
  web界面部署路径（188）: /app/trunk/web/webMonitor/
  服务部署路径（130）: /app/web/WebMonitor/
 
-
-<a  name="背景介绍"></a>
-
-## 背景介绍
-
-**WebMonitor**，此次项目工程的英文名。<br/>
-
-**数据监控界面**，此次项目工程的中文名。
-
 <a  name="项目介绍"></a>
 
 ## 项目介绍
 
->**WebMonitor** 的设计初衷是给用户提供一个web端的监控平台。分前端监控组件+后端nodeJs服务+mysql数据库，以及用于监控结果展示Web界面。项目托管于平台GitHub，可以向项目工作人员共享项目内容。<br>
+>**WebMonitor** 的设计初衷是给用户提供一个web端的监控平台。分前端监控组件+后端nodeJs服务+mysql数据库，用于将监控结果展示为Web界面。项目托管于平台GitHub，可以与项目工作人员共享项目内容。<br>
 
 <a  name="使用说明"></a>
 
@@ -111,8 +100,7 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 
 ![Right Button](https://github.com/870479457/WebMonitor/blob/master/static/readme/Right%20Button.png)
 
-2. 基于*JavaScript*语言和V8引擎的开源Web服务器项目——*node.js*
-<br>
+2. 基于*JavaScript*语言和V8引擎的开源Web服务器项目——*node.js*：<br>
 
 ![nodejslogo](https://github.com/870479457/WebMonitor/blob/master/static/readme/nodejslogo.png)
 
@@ -125,29 +113,30 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 * 2.1.2 选择*LTS(稳定版)*或*Current(常用版)*版本进行下载。<br>
 * 2.1.3 安装*node.js*，默认勾选项方可。<br>
 >安装完成*Node.js*后,*windows键+R*打开运行界面,输入*cmd*呼出命令行，输入*node -v*回车即可提示当前*node.js*版本号。
-<br/>也可输入*node*进入*Node.js*的交互环境。在交互环境下,你可以输入任意*JavaScript*语句,回车后将得到输出结果。
-要退出*Node.js*环境，连按两次*Ctrl+C*。(注：如果版本号小于*v7.6.0*，说明*Node.js*版本不对,需要重新安装*node.js*新版本。)
 <br/>
 
 3. Node.js的包管理工具——*npm*
 
->在Node.js上开发时，会用到很多别人写的JavaScript代码。大家都把自己开发的模块打包后放到npm官网上,如果要使用,直接通过npm安装就可以直接用,而且npm可以根据依赖关系，把所有依赖的包都下载下来并管理起来。否则，靠我们自己手动管理，肯定既麻烦又容易出错<br/>
+>在Node.js上开发时，会用到很多别人写的JavaScript代码。大家都把自己开发的模块打包后放到npm官网上,如果要使用,直接通过npm安装就可以直接用,而且npm可以根据依赖关系，把所有依赖的包都下载下来并管理起来。否则，靠我们自己手动管理，肯定既麻烦又容易出错。<br/>
 
 * 3.1 npm不需要去网站上下载什么,它随着node.js已经顺带着了,我们只需要打开命令行,进入项目目录盘符中，如图：我的项目盘符进入后显示为：**E:\work\WebMonitor>**：<br/>
 
 
-* 3.2 由于安转包的时候下载的速度太慢,安装之前，我们需要切换镜像为淘宝的国内镜像：命令行输入：*npm config set registry <https://registry.npm.taobao.org>* 即可。切换完成后，可以通过命令行输入：*npm config get registry*来查看是否切换成功。
+* 3.2 由于安转包的时候下载的速度太慢,安装之前，我们需要切换镜像为淘宝的国内镜像：命令行输入：*npm config set registry https://registry.npm.taobao.org* 即可。切换完成后，可以通过命令行输入：*npm config get registry*来查看是否切换成功。
 
 * 3.3 接下来在命令行：**E:\work\WebMonitor>**中输入**npm install**即可开始安装npm,等待若干分钟后会提示安装成功响应字符,若出现ERR开头的提示符,即安装失败，安装失败大多由于网络不稳定,需要多尝试几次或重启电脑。<br/>
 
-* 3.4 安装完成后换行输入***npm start***即可启动项目（此时会有npm的命令提示符启动，显示为： *DONE Compiled successfully in 1ms*）,随之项目也会以网页形式打开,到此项目基本运行起来了,到这一步项目便可以正常运行了。<br/>
+* 3.4 安装完成后换行输入**npm start**即可启动项目（此时会有npm的命令提示符启动，显示为： *DONE Compiled successfully in 1ms*）,随之项目也会以网页形式打开,到此项目基本运行起来了,到这一步项目便可以正常运行了。<br/>
 
 <a  name="代码插入"></a>
 
 ## 代码插入
 
 ```javascript
+//举例代码
 //代码高亮
+
+
 /**
 * @description 定义web app全局命名空间，并在此空间下定义属性和函数，以便全局使用
 * @file api.js
