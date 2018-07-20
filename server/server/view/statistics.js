@@ -99,9 +99,9 @@ class StatisticsInfo {
 	 */
 	interfaceTime() {
 		let sql = ` SELECT u.province, TRUNCATE(AVG(r.use_time), 2) average_use_time FROM user_info u, req_info r 
-					where u.user_token = r.user_token 
-					and r.use_time > 0 AND r.service_time > DATE_SUB(NOW(), INTERVAL 1 MONTH) GROUP BY u.province 
-					ORDER BY  average_use_time DESC LIMIT 0, 10 `;
+                    where u.user_token = r.user_token 
+                    and r.use_time > 0 AND r.service_time > DATE_SUB(NOW(), INTERVAL 1 MONTH) GROUP BY u.province 
+                    ORDER BY  average_use_time DESC LIMIT 0, 10  `;
 		return dbHelper.execPromiseSelect(sql).then(function (data) {
 			let list = [];
 			for (let i = 0; i < data.length; i++) {
@@ -119,7 +119,7 @@ class StatisticsInfo {
 	 */
 	loadPageTime() {
 		let sql = ` SELECT u.province, TRUNCATE(AVG(t.target_value), 2) average_value FROM user_info u, target_info t 
-				where u.user_token = t.user_token and t.target_code = 'domTimeout' AND t.service_time > DATE_SUB(NOW(), INTERVAL 1 MONTH)
+				where u.user_token = t.user_token and t.target_code = 'loadTimeout' AND t.service_time > DATE_SUB(NOW(), INTERVAL 1 MONTH)
 				GROUP BY u.province ORDER BY average_value DESC LIMIT 0, 10 `;
 		return dbHelper.execPromiseSelect(sql).then(function (data) {
 			let list = [];
