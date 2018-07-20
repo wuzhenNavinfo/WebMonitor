@@ -45,7 +45,7 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 
 ## 项目介绍
 
->**WebMonitor** 的设计初衷是给用户提供一个web端的监控平台。分前端监控组件+后端nodeJs服务+mysql数据库，用于将监控结果展示为Web界面。项目托管于平台GitHub，可以与项目工作人员共享项目内容。<br>
+>**WebMonitor** 的设计初衷是给用户提供一个web端的监控平台。分前端监控组件+后端nodeJs服务+mysql数据库，用于将监控结果展示为Web界面。项目托管于平台GitHub，项目内容进行权限共享；由git进行版本控制。<br>
 
 <a  name="使用说明"></a>
 
@@ -74,7 +74,6 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
   ![Right Button](https://github.com/870479457/WebMonitor/blob/master/static/readme/Right%20Button.png)
 
   
-
 <a  name="搭配环境"></a>
 
 ### 搭配环境
