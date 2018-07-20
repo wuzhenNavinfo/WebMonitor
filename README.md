@@ -2,7 +2,7 @@
 Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控结果展示Web界面。
 
 
-![WebMonitor](https://github.com/870479457/WebMonitor/blob/master/static/readme/webmonitor.png)
+![WebMonitor](./static/readme/webmonitor.png)
 
 ## 目录
 
@@ -53,14 +53,14 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 
 ### 实现项目流程图：
 
-![flowchart](https://github.com/870479457/WebMonitor/blob/master/static/readme/%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B%E5%9B%BE.png)
+![flowchart](./static/readme/%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B%E5%9B%BE.png)
 
 <a  name="获取代码"></a>
 
 ### 获取代码
 
 1.  **github**克隆项目内容,即下载代码:<br>
-  ![githublogo](https://github.com/870479457/WebMonitor/blob/master/static/readme/githublogo.png)
+  ![githublogo](./static/readme/githublogo.png)
 
 * 1.1 首先进入`github`主页: <https://github.com>。<br>
 
@@ -71,7 +71,7 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 * 1.4 点击页面导航栏`Code`下的`Clone or download`按钮，复制*web站点URL*。<br>
 
 * 1.5 在本地主机任意一个磁盘下创建项目文件夹，在此目录下右键选择*git clone*即可将项目内容克隆到该文件夹中(需要安装`GIT`才可右键*git clone*)，如图：<br>
-  ![Right Button](https://github.com/870479457/WebMonitor/blob/master/static/readme/Right%20Button.png)
+  ![Right Button](./static/readme/Right%20Button.png)
 
   
 <a  name="搭配环境"></a>
@@ -82,9 +82,9 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 
   | Logo | 网址  | 名称 |
 | :------------ |:---------------:| -----:|
-| ![Github](https://github.com/870479457/WebMonitor/blob/master/static/readme/githublogo.png)      | https://github.com/ | Github |
-| ![nodejs](https://github.com/870479457/WebMonitor/blob/master/static/readme/nodejslogo.png)      | http://nodejs.cn/        |   node.js |
-| ![GIT](https://github.com/870479457/WebMonitor/blob/master/static/readme/GITlogo.png) | https://git-scm.com |Git|
+| ![Github](./static/readme/githublogo.png)      | https://github.com/ | Github |
+| ![nodejs](./static/readme/nodejslogo.png)      | http://nodejs.cn/        |   node.js |
+| ![GIT](./static/readme/GITlogo.png) | https://git-scm.com |Git|
 
 
 <br>
@@ -96,10 +96,10 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 * 1.2 根据电脑操作系统，选择下载并安装对应的版本到磁盘文件夹中。<br>
 
 * 1.3 这样一来鼠标单击右键才会有**Git**相关操作,日后方便更新代码等操作。<br>
-  ![Right Button](https://github.com/870479457/WebMonitor/blob/master/static/readme/Right%20Button.png)
+  ![Right Button](./static/readme/Right%20Button.png)
 
 2. 基于*JavaScript*语言和V8引擎的开源Web服务器项目——*node.js*：<br>
-  ![nodejslogo](https://github.com/870479457/WebMonitor/blob/master/static/readme/nodejslogo.png)
+  ![nodejslogo](./static/readme/nodejslogo.png)
 
 >*node.js*的优势在于:借助*JavaScript*天生的事件驱动机制加V8高性能引擎，使编写高性能Web服务轻而易举,无需考虑浏览器兼容性问题。安装方法如下：
 
@@ -129,7 +129,7 @@ Web端的监控平台，后端nodeJs服务+mysql数据库，以及用于监控�
 ### 更新
 >**WebMonitor** 项目在编写时，项目工作人员需要对代码进行修改并将自己修改的内容共享到公共区域，就是版本控制。此次项目使用的是git版本控制系统。其流程大致如图所示：<br>
 
-![update](https://github.com/870479457/WebMonitor/blob/master/static/readme/GITliucheng.png)
+![update](./static/readme/GITliucheng.png)
 
 1. 基本更新、提交流程入下：
 * 1.1 首先选择项目文件夹，新建一个（remote）远程仓库名，例*origin*，设置此仓库名的URL为github中个人仓库地址，用于将本地文件正确的发布至个人远程仓库中；建立公共仓库名及URL地址（如果有就不必了）。<br/>
