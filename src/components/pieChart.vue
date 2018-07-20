@@ -43,8 +43,8 @@ function initContent(content){
     vueObj[content.ref].$el.id = content.id || createUUID();
 
     var style = {
-        height: content.height || '300px',
-        width: content.width || '300px'
+        height: content.height || '100%',
+        width: content.width || '100%'
     }
     for(var o in style){
         vueObj[content.ref].$el.style[o] = style[o];
@@ -58,6 +58,7 @@ function initChart(option){
     if(option.data.length>0){
         vueObj[option.ref].noData = false;
         var extendOption = {
+            backgroundColor: 'rgba(51,51,51,0)',
             title: {
                 text: '' || option.title,
                 x: 'center',
@@ -75,7 +76,9 @@ function initChart(option){
             show: false
         },
         series: [{
-            name: '作业员在线统计',
+            radius: ['0', '60%'],
+            center: ['50%', '50%'],
+            name: '',
             type: 'pie',
             data: option.data || [] 
         }]};

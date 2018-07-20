@@ -43,3 +43,5 @@ export const interfaceError = param => { return getReq('/webMonitor/statis/view/
 export const staticList = param => { return getReq('/webMonitor/statis/view/staticList', param)};
 //详细列表
 export const detailList = param => { return getReq('/webMonitor/statis/view/detailList', param)};
+//查询错误信息
+export const queryErrorByLocation = param => { return getReq('/webMonitor/statis/view/queryErrorByLocation', param)};

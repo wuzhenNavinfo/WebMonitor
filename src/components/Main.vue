@@ -7,19 +7,22 @@
     </div>
     <div class="change">
       <map-chart ref="map"></map-chart>
-      <div class="mapDetail" style="display:none">
-        <div class="close"></div>
+      <div class="mapDetail" v-show="showMapDetail">
+        {{mapDetail}}
+        <div class="close" v-on:click="showMapDetail=false"></div>
       </div>
+      <div class="systemTitle" style="background: url(static/title.png);background-size: 440px 100px;"></div>
+      <div class="jumpToDetail" style="background-image: url(static/jump.jpg);" title="跳转至详情页面" v-on:click="jumpToDetail"></div>
     </div>
     <div class="stable">
       <pie-chart class="arrange-v" ref="browser"></pie-chart>
       <bar-chart class="arrange-v" ref="interfaceError"></bar-chart>
       <div class="arrange-v" style="width:300px;height:30%">
         <ul>
-          <li><span>近一周接口错误总数：<span class="resultSpan">{{errorTotal}}</span></span></li>
-          <li><span>近一周接口平均耗时： <span class="resultSpan">{{averageTime}}</span></span></li>
+          <li><span>近一月接口错误总数：<span class="resultSpan">{{errorTotal}}</span></span></li>
+          <li><span>近一月接口平均耗时： <span class="resultSpan">{{averageTime}}</span></span></li>
           <li style="position:relative">
-            <span>近一周异常人员数量：<span class="resultSpan" v-on:mouseover="showUserId=true" v-on:mouseleave="showUserId=false" style="text-decoration: underline;cursor: pointer;">{{errorUser}}</span></span>
+            <span>近一月异常人员数量：<span class="resultSpan" v-on:mouseover="showUserId=true" v-on:mouseleave="showUserId=false" style="text-decoration: underline;cursor: pointer;">{{errorUser}}</span></span>
             <div v-show="showUserId" class="errorTip"><span>错误用户ID：{{errorUserID}}</span></div>
           </li>
         </ul>
@@ -32,7 +35,7 @@
   import pieChart from './pieChart.vue';
   import barChart from './barChart.vue';
   import mapChart from './mapChart.vue';
-  import { mapShow, userOnline, interfaceTime, loadPageTime, browser, interfaceError, staticList, detailList } from '../dataService/api';
+  import { mapShow, userOnline, interfaceTime, loadPageTime, browser, interfaceError, staticList, detailList, queryErrorByLocation } from '../dataService/api';
   import { appUtil } from '../config';
   import { Utils } from '../common/js/utils.js';
   var self;
@@ -44,7 +47,9 @@
         errorTotal:0,
         averageTime:'无数据',
         errorUser:'无数据',
-        errorUserID: '无数据'
+        errorUserID: '无数据',
+        mapDetail: '',
+        showMapDetail:false
       }
     },
     mounted:function(){
@@ -66,7 +71,9 @@
       barChart,
       mapChart
     },
-    methods: {}
+    methods: {
+      jumpToDetail: jumpToDetail
+    }
   }
 
   function initUserOnline(){
@@ -75,6 +82,7 @@
         content: {
           id: 'userOnlinePie',
           height:'30%',
+          width: '300px',
           ref: 'userOnline'
         },
         option: {
@@ -92,10 +100,11 @@
         content:{
           id: 'interfaceTimePie',
           height: '30%',
+          width: '300px',
           ref: 'interfaceTime'
         },
         option: {
-          title: '接口请求时间TOP10省份',
+          title: '接口请求耗时TOP10省份',
           xAxis: [],
           data: []
         }
@@ -118,10 +127,11 @@
         content:{
           id: 'loadPageTimePie',
           height: '30%',
+          width: '300px',
           ref: 'loadPageTime'
         },
         option: {
-          title: '页面渲染时间TOP10省份',
+          title: '页面渲染耗时TOP10省份',
           xAxis: [],
           data: []
         }
@@ -139,10 +149,14 @@
 
   function getBrowser(){
     browser().then(function(res){
+      res.data.forEach(function(ele){
+        ele.name = ele.name.substring(ele.name.indexOf('/') + 1,ele.name.length)
+      });
       self.$refs.browser.init({
         content: {
           id: 'browserPie',
           height:'30%',
+          width: '300px',
           ref: 'browser'
         },
         option: {
@@ -159,6 +173,7 @@
         content:{
           id: 'interfaceErrorPie',
           height: '30%',
+          width: '300px',
           ref: 'interfaceError'
         },
         option: {
@@ -181,10 +196,10 @@
   function getStaticList(){
     staticList().then(function(res){
       if(!res.errcode){
-        self.errorTotal = res.data.interfaceError;
-        self.averageTime = res.data.loadTime;
-        self.errorUser = res.data.errUserCount;
-        self.errorUserID = res.data.errUserIds;
+        self.errorTotal = res.data.interfaceError || 0 + ' 个';
+        self.averageTime = res.data.loadTime || 0 + ' 毫秒';
+        self.errorUser = res.data.errUserCount || 0 + ' 个';
+        self.errorUserID = res.data.erruserName || '无错误用户';
       }
     })
   }
@@ -212,7 +227,30 @@
         self.$refs.map.setData(mapData)
       }
     })
-    
+
+    self.$refs.map.mapClick = function(data){
+      var param = {
+        location: data.data.coord.join(',')
+      }
+      queryErrorByLocation({parameter:JSON.stringify(param)}).then(function(res){
+        if(!res.errcode){
+          self.showMapDetail= true;
+          if(res.data.length != 0){
+            var tempName = [];
+            res.data.forEach(function(ele){
+              tempName.push(ele.userName);
+            })
+            self.mapDetail = '接口报错用户有： ' + tempName.join(', ');
+          }else{
+            self.mapDetail = '无报错信息';   
+          }
+        }
+      })
+    }
+  }
+
+  function jumpToDetail(){
+    window.open('index.html#/query');
   }
 
 </script>
@@ -222,7 +260,6 @@
   .container {
     height: 100%;
     width: 100%;
-    background-color: #333; // rgb(6, 19, 37)
   }
   .container{
     height: 100%;
@@ -234,6 +271,8 @@
       height: 100%;
       text-align: center;
       .arrange-v{
+        height:30%;
+        width: 300px;
         margin: 15px auto;
         padding-top: 10px;
         box-shadow: 0px 0px 4px #009683;
@@ -270,13 +309,36 @@
       position: relative;
       .mapDetail{
         width: 200px;
-        min-height: 40px;
+        min-height: 80px;
         position: absolute;
-        border: 1px solid #fff;
         top: 100px;
-        background-color: #aaa;
+        background-color: #999;
         left: 30px;
+        -webkit-box-shadow: 0 0 6px #fff;
         box-shadow: 0 0 6px #fff;
+        color: #fff;
+        padding: 10px 0 0 10px;
+        font-size: 14px;
+      }
+      .systemTitle{
+        position: absolute;
+        width: 440px;
+        height: 100px;
+        top: 36px;
+        background-size: 440px 100px;
+        right: 0;
+        margin: auto;
+        left: 0;
+      }
+      .jumpToDetail{
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-size: 100%;
+        top: 60px;
+        border-radius: 4px;
+        right: 52px;
+        cursor: pointer;
       }
     }
 

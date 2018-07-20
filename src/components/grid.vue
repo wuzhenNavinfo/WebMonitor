@@ -1,13 +1,7 @@
 <template>
     <div>
         <el-table :data="tableData" style="width: 100%" @row-click="onRowClick">
-            <!-- <el-table-column v-for="col in cols" :prop="col.prop" :label="col.label">
-            </el-table-column> -->
-            <el-table-column prop="date" label="日期">
-            </el-table-column>
-            <el-table-column prop="name" label="姓名">
-            </el-table-column>
-            <el-table-column prop="address" label="地址">
+            <el-table-column v-for="col in cols" :prop="col.prop" :label="col.label" :width="col.width||180" :formatter="col.formatter">
             </el-table-column>
         </el-table>
         <el-pagination :page-size="pageSize" :current-page="pageNo" layout="prev, pager, next" :total="tableData.length" @current-change="changePage" v-show="tableData.length>0">
@@ -23,16 +17,7 @@ export default {
     name: 'grid',
     data() {
         return {
-            cols:[{
-                label: '日期',
-                prop: 'date'
-            },{
-                label: '姓名',
-                prop: 'name'
-            },{
-                label: '地址',
-                prop: 'address'
-            }],
+            cols:[],
             pageNo: 1,
             pageSize: 20,
             tableData: []
@@ -44,11 +29,24 @@ export default {
     },
     methods: {
         initContent: initContent,
+        refreshWidth: refreshWidth,
         onRowClick: function(){},
         changePage: function(){}
     }
 }
 
+/**
+ * 设置表格单元格宽度
+ */
+function refreshWidth(){
+    var colConfig = vueObj[this.$options._parentVnode.data.ref].cols;
+    var rowArr = document.getElementsByClassName('el-table__row');
+    for(var i=0;i<rowArr.length; i++){
+        colConfig.forEach(function(o, index){
+            rowArr[i].getElementsByClassName('cell')[index].style.width = (o.width - 5) + 'px';
+        })
+    }
+}
 /**
  * 初始化表格框样式
  */
@@ -63,7 +61,7 @@ function initContent(content){
     for(var o in style){
         vueObj[content.ref].$el.style[o] = style[o];
     }
-    document.getElementById(vueObj[content.ref].$el.id).getElementsByClassName('el-table__body')[0].style.maxHeight = (content.height - 70) +'px'
+    document.getElementById(vueObj[content.ref].$el.id).getElementsByClassName('el-table__body')[0].style.maxHeight = (content.height - 90) +'px'
 }
 
 /**
@@ -82,10 +80,6 @@ function createUUID(){
     
 </style>
 <style lang="less">
-    @import '/element-ui/lib/theme-chalk/index.css';
-    .el-table th, .el-table tr {
-        
-    }
     .el-table td, .el-table th{
         padding: 5px 0;
     }
@@ -121,14 +115,22 @@ function createUUID(){
             }
         }
         tr:hover{
-            color:#333;
-            background-color: #999;
+            color: #333;
+            background-color: #aaa;
         }
     }
     .el-table__body{
         max-height: 600px;
         display: block;
         overflow: auto;
+    }
+    .el-table .cell{
+        box-sizing: border-box;
+        white-space: nowrap;
+        word-break: break-all;
+        line-height: 23px;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
     .el-pagination{
         padding: 2px 0px;
