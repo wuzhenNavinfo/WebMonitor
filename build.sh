@@ -1,4 +1,6 @@
 echo "build WebMonitor begin"
+pwd
+npm install
 npm run build
 
 mkdir -p build
