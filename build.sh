@@ -1,4 +1,4 @@
-echo "build WebMonitor begin"
+echo "build WebMonitor begin" 
 pwd
 npm install
 npm run build
