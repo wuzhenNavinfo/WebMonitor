@@ -16,8 +16,9 @@ echo "build WebMonitor page end"
 echo "build WebMonitor service begin"
 cd server
 
-zip -rq ../server.zip ./*
+zip -rq server.zip ./*
 cd ../
+cp -r server/server.zip server.zip
 
 
 
