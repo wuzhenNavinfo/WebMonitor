@@ -1,4 +1,4 @@
-echo "build WebMonitor begin"
+echo "build WebMonitor page begin"
 pwd
 npm install
 echo "build start ---"
@@ -11,4 +11,14 @@ zip -rq WebMonitor.zip ./*
 
 cp -r WebMonitor.zip ../
 
-echo "build WebMonitor end"
+echo "build WebMonitor page end"
+
+echo "build WebMonitor service begin"
+cd server
+
+zip -rq ../server.zip ./*
+cd ../
+
+
+
+echo "build WebMonitor service end"
