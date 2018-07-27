@@ -1,5 +1,7 @@
 echo "build WebMonitor begin"
 pwd
+npm install nrm -g
+nrm use taobao
 npm install
 npm run build
 
