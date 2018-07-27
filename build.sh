@@ -1,15 +1,12 @@
 echo "build WebMonitor begin"
 pwd
-npm install nrm -g
-nrm use taobao
 npm install
+echo "build start ---"
 npm run build
+echo "build finish ---"
+pwd
 
-mkdir -p build
-cp -r server/public/dist/index.html build
-cp -r server/public/dist/static build
 
-cd build
-zip -rq ../WebMonitor.zip ./*
+zip -rq ./WebMonitor.zip ./dist/*
 
 echo "build WebMonitor end"
