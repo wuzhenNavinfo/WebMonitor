@@ -6,7 +6,9 @@ npm run build
 echo "build finish ---"
 pwd
 
+cd dist
+zip -rq WebMonitor.zip ./*
 
-zip -rq ./WebMonitor.zip ./dist/*
+cp -r WebMonitor.zip ../
 
 echo "build WebMonitor end"
